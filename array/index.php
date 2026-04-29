@@ -1,101 +1,190 @@
 <?php
-
 $_MENU = [
-    'Home' => '<h1>Página Inicial</h1><p>Bem-vindo ao meu site!</p>',
-    'Sobre' => '<h1>Sobre</h1><p>Informações sobre mim.</p>',
-    'Contato' => '<h1>Contato</h1><p>Email: contato@email.com</p>',
-    'Experiencias' => '<h1>Experiências</h1><p>Minhas experiências profissionais.</p>',
-    'Projetos' => '<h1>Projetos</h1><p>Lista de projetos desenvolvidos.</p>'
+    'Home' => 'home.php',
+    'Sobre' => 'sobre.php',
+    'Contato' => 'contato.php',
+    'Experiencias' => 'experiencias.php',
+    'Projetos' => 'projetos.php'
 ];
 
-$_pagina = isset($_GET['page']) ? $_GET['page'] : 'Home';
+$pagina = $_GET['page'] ?? 'Home';
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Site Dinâmico PHP</title>
+<meta charset="UTF-8">
+<title>Meu Streaming</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #0d0d0d;
-            color: #fff;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0d0d0d;
+    color: #fff;
+}
 
-        header {
-            background: #1a1a1a;
-            padding: 15px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }   
+header {
+    background: #141414;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+}
 
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
+nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
 
-        .logo img {
-            height: 40px;
-        }
+.logo img {
+    height: 40px;
+}
 
-        header a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 8px 12px;
-            transition: 0.3s;
-            border-radius: 5px;
-        }
+a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-        header a:hover {
-            background: #eb0000;
-            color: #fff;
-        }
+a:hover {
+    color: red;
+}
 
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
-            background: #1a1a1a;
-            border-radius: 10px;
+/* Netflix style */
+.container {
+    padding: 20px;
+}
 
-        }
+.linha {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+}
 
-        h1 {
-            color: #eb0000;
-        }   
-    </style>
+.card {
+    min-width: 180px;
+    transition: 0.3s;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+/* 🎥 BANNER */
+.banner {
+    height: 400px;
+    background: url('img/1.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    padding: 40px;
+}
+
+.banner-content {
+    max-width: 400px;
+}
+
+.play-btn {
+    background: red;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* 🔍 busca */
+form {
+    margin: 20px 0;
+}
+
+input {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+}
+
+/* 🎬 CARDS estilo Netflix */
+.linha {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+}
+
+.card {
+    position: relative;
+    min-width: 140px; /* 👈 menor */
+    transition: 0.3s;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+/* ▶ overlay play */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: 0.3s;
+    border-radius: 6px;
+}
+
+.overlay button {
+    background: red;
+    border: none;
+    color: white;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.card:hover .overlay {
+    opacity: 1;
+}
+
+.card:hover {
+    transform: scale(1.08);
+}
+</style>
 </head>
 
 <body>
 
 <header>
-    <nav>
-        <a class="logo" href="?page=Home">
-            <img src="img/logo.png" alt="Logo">
-        </a>
+<nav>
+<a class="logo" href="?page=Home">
+    <img src="img/logo.png">
+</a>
 
-        <?php
-        foreach($_MENU as $key => $value){
-            echo '<a href="?page='.$key.'">'.$key.'</a>';
-        }
-        ?>
-    </nav>
+<?php
+foreach($_MENU as $key => $value){
+    echo '<a href="?page='.$key.'">'.$key.'</a>';
+}
+?>
+</nav>
 </header>
 
 <div class="container">
-    <?php
-    if(array_key_exists($_pagina, $_MENU)){
-        echo $_MENU[$_pagina];
-    } else {
-        echo '<h1>Página não encontrada</h1>';
-    }
-    ?>
+<?php
+if(array_key_exists($pagina, $_MENU)){
+    include $_MENU[$pagina];
+} else {
+    echo "<h1>Página não encontrada</h1>";
+}
+?>
 </div>
 
 </body>
