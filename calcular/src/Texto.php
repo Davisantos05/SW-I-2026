@@ -1,0 +1,1 @@
+<?php class Texto{public function maiusculo($texto){return strtoupper($texto);}}

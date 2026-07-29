@@ -1,0 +1,1 @@
+<?php class Calcular{public function somar($a,$b){return $a+$b;} public function multiplicar($a,$b){return $a*$b;}}
